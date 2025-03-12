@@ -1,15 +1,5 @@
+[![Laravel Forge Site Deployment Status](https://img.shields.io/endpoint?url=https%3A%2F%2Fforge.laravel.com%2Fsite-badges%2F53949abd-a003-47ea-8abe-86c312a2b554%3Flabel%3D1%26commit%3D1&style=flat-square)](https://forge.laravel.com/servers/863298/sites/2542382)
+
 # index
 
-Rapid information retrieval system. 
-
-## To Do
-
-- ULIDs corresponding to objects
-- Method to create and register a new ULID
-- 1Password-ish key:value pair adding
-
-## Visual Design
-
-- minimalistic and utilitarian
-- inspiration: GUIs from Deus Ex: Mankind Divided and Cyberpunk 2077
-- triangles and hexagons
+Pathfinder for the Index Integration Project.

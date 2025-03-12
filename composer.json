@@ -1,7 +1,7 @@
 {
     "name": "adambuilds/index",
     "type": "project",
-    "description": "...",
+    "description": "Pathfinder for the Index Integration Project",
     "keywords": ["laravel", "framework"],
     "license": "MIT",
     "require": {

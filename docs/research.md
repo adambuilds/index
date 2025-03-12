@@ -17,7 +17,21 @@ Index - Service and microservice for indexing real-world objects and immaterial 
 Index technology base testing environment-- folders are named after the respective framework e.g. /laravel/index/{ROOT}
 Service application for indexing real-world objects and immaterial ideas using QR codes.
 
-## TO DO
+## To do items
 
-- **Minimum viable product (MVP)** - basic functionality of the url and qr code generation
-- Project is named "ndx" to distinguish from the MVP which will be named "index" and accessible via naked index.one domain
+### Critical functionality
+
+Minimum viable product!
+
+- Basic functionality of the url and qr code generation
+- ULIDs corresponding to objects
+- Method to create and register a new ULID
+- 1Password-ish key:value pair adding
+
+## Thoughts
+
+Do LLMs already accomplish what I'm trying to do here except on a much greater scale? Tokenization of words.
+
+Example: What constitutes a "company", manufacturer, or vendor. Are all `models` as Laravel defines them bespoke? Is there one general model for an `object` or `subject`?
+
+Dell is a subject, that is of type manufacturer and company, and is a legal entity.
