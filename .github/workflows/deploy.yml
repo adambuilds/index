@@ -1,0 +1,132 @@
+name: Deploy
+
+on:
+  push:
+    branches:
+      - master
+      - next
+
+env:
+  DEV_SERVER: "dev-http0.index.one"
+  DEV_PATH: "/var/www/index"
+  PROD_SERVER: "index.index.one"
+  PROD_PATH: "/var/www/index"
+  DEPLOY_USER: "gitdeploy"
+  BUILD_ARTIFACT: "index.tar.gz"
+  GIT_STRATEGY: "fetch"
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      
+      - name: Set up PHP & Node.js
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: "8.3"
+      
+      - name: Install dependencies
+        run: |
+          sudo apt-get update && sudo apt-get install -y curl php-cli unzip git
+          curl -sS https://getcomposer.org/installer | php
+          npm ci
+          npm run build
+          php composer.phar install --no-dev --optimize-autoloader
+
+      - name: Package artifact
+        run: |
+          tar -czf $BUILD_ARTIFACT app bootstrap config database public resources routes storage vendor artisan composer.lock composer.json index.conf
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: index-artifact
+          path: ${{ env.BUILD_ARTIFACT }}
+
+  release:
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Install Semantic Release
+        run: npm install -g semantic-release conventional-changelog-cli
+      
+      - name: Configure Git
+        run: |
+          git config --global user.name "index-github-runner"
+          git config --global user.email "runner@index.index.one"
+          git remote set-url origin "https://x-access-token:${{ secrets.CI_TOKEN }}@github.com/${{ github.repository }}.git"
+
+      - name: Run Semantic Release
+        run: |
+          if [[ "${{ github.ref }}" == "refs/heads/master" ]]; then
+            npx semantic-release || echo "Semantic release failed"
+          else
+            npx semantic-release --branches next || echo "Prerelease on next failed"
+          fi
+
+      - name: Update Changelog
+        run: |
+          conventional-changelog -p angular -i CHANGELOG.md -s || echo "No changes found"
+          git add CHANGELOG.md
+          if ! git diff --cached --quiet; then
+            git commit -m "chore: update changelog"
+            git push origin ${{ github.ref_name }} || echo "Nothing to push"
+          else
+            echo "No changes to commit"
+          fi
+
+  deploy:
+    runs-on: ubuntu-latest
+    needs: release
+    steps:
+      - name: Download artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: index-artifact
+
+      - name: Set deployment variables
+        run: |
+          if [[ "${{ github.ref }}" == "refs/heads/master" ]]; then
+            echo "DEPLOY_HOST=${{ env.PROD_SERVER }}" >> $GITHUB_ENV
+            echo "DEPLOY_PATH=${{ env.PROD_PATH }}" >> $GITHUB_ENV
+            echo "DEPLOY_KEY=${{ secrets.PROD_DEPLOY_KEY }}" >> $GITHUB_ENV
+          else
+            echo "DEPLOY_HOST=${{ env.DEV_SERVER }}" >> $GITHUB_ENV
+            echo "DEPLOY_PATH=${{ env.DEV_PATH }}" >> $GITHUB_ENV
+            echo "DEPLOY_KEY=${{ secrets.DEV_DEPLOY_KEY }}" >> $GITHUB_ENV
+
+      - name: Setup SSH
+        run: |
+          mkdir -p ~/.ssh
+          chmod 700 ~/.ssh
+          echo "${DEPLOY_KEY}" > /tmp/deploy_key
+          chmod 600 /tmp/deploy_key
+          ssh-keyscan -H "${DEPLOY_HOST}" >> ~/.ssh/known_hosts
+
+      - name: Deploy artifact
+        run: |
+          rsync -avz --no-perms --no-owner -e "ssh -i /tmp/deploy_key" $BUILD_ARTIFACT ${DEPLOY_USER}@${DEPLOY_HOST}:${DEPLOY_PATH}/
+          ssh -i /tmp/deploy_key ${DEPLOY_USER}@${DEPLOY_HOST} << EOF
+          cd ${DEPLOY_PATH}
+          tar -xzf ${BUILD_ARTIFACT}
+          rm -f ${BUILD_ARTIFACT}
+          chown -R gitdeploy:apache .
+          chmod -R g+rwX .
+          find storage bootstrap/cache -type d -exec chmod 775 {} \;
+          find storage bootstrap/cache -type f -exec chmod 664 {} \;
+          chmod g+s storage bootstrap/cache
+          EOF
