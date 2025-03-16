@@ -1,0 +1,113 @@
+/* fun styles that look like the "old" Militech GUIs in Cyberpunk 2077: Phantom Liberty */
+
+/* 1) Import a futuristic font that roughly matches Militech/Cyberpunk vibes */
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap');
+
+/* 2) Basic global defaults to set up the dark background and font styling */
+html, body {
+  margin: 0;
+  padding: 0;
+  background: linear-gradient(to bottom, #121212, #000000 80%);
+  font-family: 'Orbitron', Arial, sans-serif;
+  color: #eaeaea;
+}
+
+/* 3) A container or wrapper that holds all your “terminal” / “screen” content */
+.militech-screen {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 1rem 2rem;
+}
+
+/* 4) A panel style for main content blocks (like the messages on screen) */
+.militech-panel {
+  background: linear-gradient(#1c1c1c, #101010 80%);
+  border: 2px solid #c6a302; /* gold / yellow-ish */
+  border-radius: 4px;
+  box-shadow: 0 0 10px rgba(255, 207, 0, 0.15);
+  padding: 1rem;
+  margin-bottom: 1rem;
+}
+
+/* 5) Headings / Titles in uppercase with a bit of spacing */
+.militech-title {
+  text-transform: uppercase;
+  color: #f1c40f; /* gold highlight color */
+  letter-spacing: 1px;
+  margin: 0 0 0.5rem 0;
+  font-weight: 700;
+}
+
+.militech-subtitle {
+  text-transform: uppercase;
+  color: #e2e2e2;
+  font-size: 0.85rem;
+  letter-spacing: 1px;
+  margin: 0 0 1rem;
+}
+
+/* 6) Subtle text styling for body/copy in the panel */
+.militech-text {
+  font-size: 0.9rem;
+  line-height: 1.4;
+  color: #cccccc;
+  margin-bottom: 1rem;
+}
+
+/* 7) A “list” style for something like the left column of messages */
+.militech-list {
+  background: linear-gradient(#252525, #111111 70%);
+  border: 1px solid #444;
+  border-radius: 3px;
+  list-style: none;
+  padding: 0;
+  margin: 0 0 1rem 0;
+}
+
+.militech-list-item {
+  padding: 0.75rem 1rem;
+  border-bottom: 1px solid #333;
+  color: #ccc;
+  cursor: pointer;
+}
+
+.militech-list-item:hover {
+  background-color: #303030;
+}
+
+/* If you want an “urgent” highlight in the list */
+.militech-list-item.urgent {
+  color: #ff7272;
+  font-weight: 700;
+}
+
+/* 8) Sub-styles for labeling “From:”, “To:” or similar metadata */
+.militech-label {
+  color: #aaa;
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.militech-value {
+  color: #fff;
+  font-size: 0.8rem;
+  margin-left: 0.5rem;
+}
+
+/* 9) Optional button/link style for any interactive elements */
+.militech-button {
+  display: inline-block;
+  padding: 0.5rem 1rem;
+  background: #f1c40f;
+  color: #000;
+  text-transform: uppercase;
+  text-decoration: none;
+  border-radius: 2px;
+  font-weight: 700;
+  margin-top: 1rem;
+}
+
+.militech-button:hover {
+  background: #cfab0c;
+}

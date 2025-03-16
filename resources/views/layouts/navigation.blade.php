@@ -16,9 +16,11 @@
                         {{ __('Dashboard') }}
                     </x-nav-link>
 
+                    <?php /*
                     <x-nav-link :href="route('jobs.index')" :active="request()->routeIs('jobs')">
                         {{ __('Jobs') }}
                     </x-nav-link>
+                    */ ?>
                 </div>
             </div>
 

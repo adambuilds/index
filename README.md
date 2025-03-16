@@ -2,4 +2,10 @@
 
 # index
 
-Pathfinder for the Index Integration Project.
+Development pathfinder for the **Index Integration Project**.
+
+Deployed to https://index.one, but intended to be portable. Maybe eventually even distributed.
+
+## Notes
+
+- dark mode is set via layout blade `<html class='dark'>` to not burn my eyes

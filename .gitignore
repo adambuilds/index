@@ -20,6 +20,9 @@ yarn-error.log
 /.idea
 /.vscode
 .DS_Store
+*/.DS_Store
 /database/dumps/*
 /database/init/*
 vhost.conf
+.rnd
+herd.yml
