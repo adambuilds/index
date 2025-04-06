@@ -1,8 +1,6 @@
 <?php
 
-use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\LegacyController;
-use App\Http\Controllers\JobController;
+namespace App\Http\Controllers;
 
 use Illuminate\Support\Facades\Route;
 
@@ -17,7 +15,7 @@ Route::get('/dashboard', function () {
 // authenticated routes
 Route::middleware('auth')->group(function () {
 
-    Route::resource('subjects', SubjectController::class);
+    Route::resource('subject', SubjectController::class);
 
     // user
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

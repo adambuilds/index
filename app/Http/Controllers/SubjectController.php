@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\Subject;
+
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+
 use chillerlan\QRCode\QRCode;
 use chillerlan\QRCode\QROptions;
 
@@ -36,27 +38,28 @@ class SubjectController extends Controller
         $subject = Subject::create([
             'name' => $request->input('name'),
         ]);
-
+        
         // Generate the URL for the subject
         $url = route('subject.show', ['id' => $subject->id]);
-
-        // Generate the QR code
-        $qrCode = (new QRCode(new QROptions([
+        
+        $options = new QROptions([
             'outputType' => QRCode::OUTPUT_IMAGE_PNG,
             'eccLevel'   => QRCode::ECC_H,
-        ])))->render($url);
-
-        // Define the file path
-        $filePath = "qrcodes/{$subject->id}.png";
-
-        // Store the QR code in the storage path
-        Storage::disk('local')->put($filePath, $qrCode);
-
-        // Return response with subject details and QR code path
-        return response()->json([
-            'subject' => $subject,
-            'qr_code_url' => asset("storage/{$filePath}"),
         ]);
+        
+        // Define the file path in the public folder
+        $filePath = public_path("qr/{$subject->id}.png");
+        
+        // Ensure the public/qr directory exists
+        if (!file_exists(public_path('qr'))) {
+            mkdir(public_path('qr'), 0755, true);
+        }
+        
+        // Render and directly save to the file
+        (new QRCode($options))->render($url, $filePath);
+
+        // redirect to the subject's show page
+        return redirect()->route('subject.show', ['id' => $subject->id]);
     }
 
     /**
@@ -66,13 +69,7 @@ class SubjectController extends Controller
     {
         $subject = Subject::findOrFail($id);
 
-        $qrCodePath = storage_path("app/qrcodes/{$subject->id}.png");
-        $qrCodeUrl = file_exists($qrCodePath) ? asset("storage/qrcodes/{$subject->id}.png") : null;
-
-        return response()->json([
-            'subject' => $subject,
-            'qr_code_url' => $qrCodeUrl,
-        ]);
+        return view('subject.show', compact('subject'));
     }
 
     /**
