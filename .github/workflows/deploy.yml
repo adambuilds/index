@@ -1,19 +1,10 @@
-name: Deploy
+name: deploy
 
 on:
   push:
     branches:
       - master
       - next
-
-env:
-  DEV_SERVER: "dev-http0.index.one"
-  DEV_PATH: "/var/www/index"
-  PROD_SERVER: "index.index.one"
-  PROD_PATH: "/var/www/index"
-  DEPLOY_USER: "gitdeploy"
-  BUILD_ARTIFACT: "index.tar.gz"
-  GIT_STRATEGY: "fetch"
 
 jobs:
   build:
@@ -67,7 +58,7 @@ jobs:
       - name: Configure Git
         run: |
           git config --global user.name "index-github-runner"
-          git config --global user.email "runner@index.index.one"
+          git config --global user.email "runner@index.one"
           git remote set-url origin "https://x-access-token:${{ secrets.CI_TOKEN }}@github.com/${{ github.repository }}.git"
 
       - name: Run Semantic Release
