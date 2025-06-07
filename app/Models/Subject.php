@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Concerns\HasUlids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\SubjectMeta;
+use App\Models\SubjectLink;
 
 class Subject extends Model
 {
@@ -16,5 +17,10 @@ class Subject extends Model
     public function meta()
     {
         return $this->hasMany(SubjectMeta::class);
+    }
+
+    public function links()
+    {
+        return $this->hasMany(SubjectLink::class);
     }
 }

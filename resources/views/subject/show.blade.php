@@ -22,6 +22,24 @@
             <img src="{{ 'qr/' . $subject->id . '.png' }}" alt="QR code for {{ $subject->name }}." class="mt-4 w-full h-auto rounded-lg shadow-md bg-white">
         </a>
 
+        @if($subject->links->count())
+        <div class="mt-6">
+            <h3 class="font-semibold text-gray-900 dark:text-gray-100">Links</h3>
+            <ul class="mt-2 space-y-1">
+                @foreach($subject->links as $link)
+                    <li class="flex justify-between">
+                        <a href="{{ $link->url }}" class="text-blue-600 hover:underline" target="_blank">{{ $link->title }}</a>
+                        <form method="POST" action="{{ route('subject.links.destroy', [$subject->id, $link->id]) }}">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" class="text-red-600">x</button>
+                        </form>
+                    </li>
+                @endforeach
+            </ul>
+        </div>
+        @endif
+
         @if($subject->meta->count())
         <div class="mt-6">
             <h3 class="font-semibold text-gray-900 dark:text-gray-100">Metadata</h3>
@@ -51,6 +69,19 @@
             </div>
             <div>
                 <button type="submit" class="bg-blue-600 text-white px-3 py-1 rounded-md">Add</button>
+            </div>
+        </form>
+
+        <form method="POST" action="{{ route('subject.links.store', $subject->id) }}" class="mt-6 space-y-2">
+            @csrf
+            <div>
+                <input type="text" name="title" placeholder="Link title" class="w-full rounded-md" required />
+            </div>
+            <div>
+                <input type="url" name="url" placeholder="https://example.com" class="w-full rounded-md" required />
+            </div>
+            <div>
+                <button type="submit" class="bg-blue-600 text-white px-3 py-1 rounded-md">Add Link</button>
             </div>
         </form>
 

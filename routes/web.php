@@ -18,6 +18,8 @@ Route::middleware('auth')->group(function () {
     Route::resource('subject', SubjectController::class);
     Route::post('subject/{subject}/meta', [SubjectMetaController::class, 'store'])->name('subject.meta.store');
     Route::delete('subject/{subject}/meta/{meta}', [SubjectMetaController::class, 'destroy'])->name('subject.meta.destroy');
+    Route::post('subject/{subject}/links', [SubjectLinkController::class, 'store'])->name('subject.links.store');
+    Route::delete('subject/{subject}/links/{link}', [SubjectLinkController::class, 'destroy'])->name('subject.links.destroy');
 
     // user
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
