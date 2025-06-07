@@ -21,7 +21,39 @@
         <a href="{{ route('subject.show', $subject->id) }}" class="mt-4 inline-flex items-center bg-blue-600 text-white rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">
             <img src="{{ 'qr/' . $subject->id . '.png' }}" alt="QR code for {{ $subject->name }}." class="mt-4 w-full h-auto rounded-lg shadow-md bg-white">
         </a>
-        
+
+        @if($subject->meta->count())
+        <div class="mt-6">
+            <h3 class="font-semibold text-gray-900 dark:text-gray-100">Metadata</h3>
+            <ul class="mt-2 space-y-1">
+                @foreach($subject->meta as $meta)
+                    <li class="flex justify-between">
+                        <span class="text-gray-700 dark:text-gray-300">{{ $meta->key }}:</span>
+                        <span class="text-gray-700 dark:text-gray-300">{{ $meta->value }}</span>
+                        <form method="POST" action="{{ route('subject.meta.destroy', [$subject->id, $meta->id]) }}">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" class="text-red-600">x</button>
+                        </form>
+                    </li>
+                @endforeach
+            </ul>
+        </div>
+        @endif
+
+        <form method="POST" action="{{ route('subject.meta.store', $subject->id) }}" class="mt-6 space-y-2">
+            @csrf
+            <div>
+                <input type="text" name="key" placeholder="Key" class="w-full rounded-md" required />
+            </div>
+            <div>
+                <input type="text" name="value" placeholder="Value" class="w-full rounded-md" />
+            </div>
+            <div>
+                <button type="submit" class="bg-blue-600 text-white px-3 py-1 rounded-md">Add</button>
+            </div>
+        </form>
+
     </header>
 </section>
 

@@ -16,6 +16,8 @@ Route::get('/dashboard', function () {
 Route::middleware('auth')->group(function () {
 
     Route::resource('subject', SubjectController::class);
+    Route::post('subject/{subject}/meta', [SubjectMetaController::class, 'store'])->name('subject.meta.store');
+    Route::delete('subject/{subject}/meta/{meta}', [SubjectMetaController::class, 'destroy'])->name('subject.meta.destroy');
 
     // user
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
