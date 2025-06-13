@@ -32,11 +32,13 @@ class SubjectController extends Controller
         // Validate request
         $request->validate([
             'name' => 'required|string|max:255',
+            'belongs_to_subject_id' => 'nullable|exists:subjects,id',
         ]);
 
         // Create a new Subject
         $subject = Subject::create([
             'name' => $request->input('name'),
+            'belongs_to_subject_id' => $request->input('belongs_to_subject_id'),
         ]);
         
         // Generate the URL for the subject
@@ -89,9 +91,10 @@ class SubjectController extends Controller
 
         $request->validate([
             'name' => 'sometimes|string|max:255',
+            'belongs_to_subject_id' => 'nullable|exists:subjects,id',
         ]);
 
-        $subject->update($request->only('name'));
+        $subject->update($request->only('name', 'belongs_to_subject_id'));
 
         return response()->json([
             'message' => 'Subject updated successfully.',

@@ -27,6 +27,9 @@ Minimum viable product!
 - ULIDs corresponding to objects
 - Method to create and register a new ULID
 - 1Password-ish key:value pair adding
+- Add and manage external links for each subject
+- Organize subjects using simple tags
+- Subjects can belong to other subjects for hierarchical organization
 
 ## Thoughts
 
