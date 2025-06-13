@@ -6,18 +6,12 @@ use App\Models\Subject;
 it('can assign a subject to another subject', function () {
     $user = User::factory()->create();
     $parent = Subject::factory()->create(['name' => 'Parent']);
+    $child = Subject::factory()->create(['name' => 'Child']);
 
-    $response = $this
-        ->actingAs($user)
-        ->post('/subject', [
-            'name' => 'Child',
-            'belongs_to_subject_id' => $parent->id,
-        ]);
+    $parent->children()->attach($child->id);
 
-    $child = Subject::where('name', 'Child')->first();
-    $response->assertRedirect(route('subject.show', $child->id, absolute: false));
-    $this->assertDatabaseHas('subjects', [
-        'name' => 'Child',
-        'belongs_to_subject_id' => $parent->id,
+    $this->assertDatabaseHas('subject_relations', [
+        'parent_id' => $parent->id,
+        'child_id' => $child->id,
     ]);
 });
