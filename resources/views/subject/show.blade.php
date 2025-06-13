@@ -58,23 +58,29 @@
         </div>
         @endif
 
-        @if($subject->parentSubject)
+        @if($subject->parents->count())
         <div class="mt-6">
             <h3 class="font-semibold text-gray-900 dark:text-gray-100">Belongs To</h3>
-            <p class="text-gray-700 dark:text-gray-300">{{ $subject->parentSubject->name }}</p>
+            <ul class="mt-2 space-y-1">
+                @foreach($subject->parents as $parent)
+                    <li class="text-gray-700 dark:text-gray-300">{{ $parent->name }}</li>
+                @endforeach
+            </ul>
         </div>
         @endif
 
-        @if($subject->childSubjects->count())
+        @if($subject->children->count())
         <div class="mt-6">
             <h3 class="font-semibold text-gray-900 dark:text-gray-100">Members</h3>
             <ul class="mt-2 space-y-1">
-                @foreach($subject->childSubjects as $child)
+                @foreach($subject->children as $child)
                     <li class="text-gray-700 dark:text-gray-300">{{ $child->name }}</li>
                 @endforeach
             </ul>
         </div>
         @endif
+
+        @include('subject.search', ['subject' => $subject])
 
         @if($subject->meta->count())
         <div class="mt-6">

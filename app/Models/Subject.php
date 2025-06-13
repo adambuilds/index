@@ -13,7 +13,7 @@ class Subject extends Model
 {
     use HasUlids, HasFactory;
 
-    protected $fillable = ['name', 'url', 'belongs_to_subject_id'];
+    protected $fillable = ['name', 'url'];
 
     public function meta()
     {
@@ -30,13 +30,13 @@ class Subject extends Model
         return $this->belongsToMany(Tag::class);
     }
 
-    public function parentSubject()
+    public function parents()
     {
-        return $this->belongsTo(Subject::class, 'belongs_to_subject_id');
+        return $this->belongsToMany(Subject::class, 'subject_relations', 'child_id', 'parent_id');
     }
 
-    public function childSubjects()
+    public function children()
     {
-        return $this->hasMany(Subject::class, 'belongs_to_subject_id');
+        return $this->belongsToMany(Subject::class, 'subject_relations', 'parent_id', 'child_id');
     }
 }
