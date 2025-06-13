@@ -24,6 +24,10 @@
                 <x-input-label for="name" :value="__('Subject Name')" />
                 <x-text-input id="name" name="name" type="text" class="mt-1 block w-full"/>
             </div>
+            <div>
+                <x-input-label :value="__('Belongs To')" />
+                <x-subject-search />
+            </div>
 
             <div class="flex items-center gap-4">
                 <x-primary-button>{{ __('Create Subject') }}</x-primary-button>

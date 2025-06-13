@@ -11,13 +11,14 @@ it('can assign a subject to another subject', function () {
         ->actingAs($user)
         ->post('/subject', [
             'name' => 'Child',
-            'belongs_to_subject_id' => $parent->id,
+            'parent_subject_id' => $parent->id,
         ]);
 
     $child = Subject::where('name', 'Child')->first();
     $response->assertRedirect(route('subject.show', $child->id, absolute: false));
-    $this->assertDatabaseHas('subjects', [
-        'name' => 'Child',
-        'belongs_to_subject_id' => $parent->id,
+    $this->assertDatabaseHas('subject_relationships', [
+        'subject_id' => $child->id,
+        'related_subject_id' => $parent->id,
+        'type' => 'belongs_to',
     ]);
 });
