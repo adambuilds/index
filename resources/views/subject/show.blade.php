@@ -40,6 +40,24 @@
         </div>
         @endif
 
+        @if($subject->tags->count())
+        <div class="mt-6">
+            <h3 class="font-semibold text-gray-900 dark:text-gray-100">Tags</h3>
+            <ul class="mt-2 space-y-1">
+                @foreach($subject->tags as $tag)
+                    <li class="flex justify-between">
+                        <span class="text-gray-700 dark:text-gray-300">{{ $tag->name }}</span>
+                        <form method="POST" action="{{ route('subject.tags.destroy', [$subject->id, $tag->id]) }}">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" class="text-red-600">x</button>
+                        </form>
+                    </li>
+                @endforeach
+            </ul>
+        </div>
+        @endif
+
         @if($subject->meta->count())
         <div class="mt-6">
             <h3 class="font-semibold text-gray-900 dark:text-gray-100">Metadata</h3>
@@ -82,6 +100,16 @@
             </div>
             <div>
                 <button type="submit" class="bg-blue-600 text-white px-3 py-1 rounded-md">Add Link</button>
+            </div>
+        </form>
+
+        <form method="POST" action="{{ route('subject.tags.store', $subject->id) }}" class="mt-6 space-y-2">
+            @csrf
+            <div>
+                <input type="text" name="name" placeholder="Tag name" class="w-full rounded-md" required />
+            </div>
+            <div>
+                <button type="submit" class="bg-blue-600 text-white px-3 py-1 rounded-md">Add Tag</button>
             </div>
         </form>
 

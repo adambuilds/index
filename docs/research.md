@@ -28,6 +28,7 @@ Minimum viable product!
 - Method to create and register a new ULID
 - 1Password-ish key:value pair adding
 - Add and manage external links for each subject
+- Organize subjects using simple tags
 
 ## Thoughts
 

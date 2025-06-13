@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\SubjectMeta;
 use App\Models\SubjectLink;
+use App\Models\Tag;
 
 class Subject extends Model
 {
@@ -22,5 +23,10 @@ class Subject extends Model
     public function links()
     {
         return $this->hasMany(SubjectLink::class);
+    }
+
+    public function tags()
+    {
+        return $this->belongsToMany(Tag::class);
     }
 }
