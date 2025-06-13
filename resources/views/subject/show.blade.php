@@ -120,7 +120,6 @@
                 <button type="submit" class="bg-blue-600 text-white px-3 py-1 rounded-md">Add Link</button>
             </div>
         </form>
-
         <form method="POST" action="{{ route('subject.tags.store', $subject->id) }}" class="mt-6 space-y-2">
             @csrf
             <div>
@@ -130,7 +129,6 @@
                 <button type="submit" class="bg-blue-600 text-white px-3 py-1 rounded-md">Add Tag</button>
             </div>
         </form>
-
     </header>
 </section>
 
