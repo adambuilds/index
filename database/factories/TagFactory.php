@@ -2,18 +2,17 @@
 
 namespace Database\Factories;
 
-use App\Models\Subject;
+use App\Models\Tag;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
-class SubjectFactory extends Factory
+class TagFactory extends Factory
 {
-    protected $model = Subject::class;
+    protected $model = Tag::class;
 
     public function definition(): array
     {
         return [
             'name' => $this->faker->word,
-            'belongs_to_subject_id' => null,
         ];
     }
 }

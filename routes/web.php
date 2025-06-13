@@ -20,6 +20,8 @@ Route::middleware('auth')->group(function () {
     Route::delete('subject/{subject}/meta/{meta}', [SubjectMetaController::class, 'destroy'])->name('subject.meta.destroy');
     Route::post('subject/{subject}/links', [SubjectLinkController::class, 'store'])->name('subject.links.store');
     Route::delete('subject/{subject}/links/{link}', [SubjectLinkController::class, 'destroy'])->name('subject.links.destroy');
+    Route::post('subject/{subject}/tags', [SubjectTagController::class, 'store'])->name('subject.tags.store');
+    Route::delete('subject/{subject}/tags/{tag}', [SubjectTagController::class, 'destroy'])->name('subject.tags.destroy');
 
     // user
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
