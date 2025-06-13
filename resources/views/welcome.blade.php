@@ -23,7 +23,7 @@
                 <div class="relative w-full max-w-2xl px-6 lg:max-w-7xl">
                     <header class="grid grid-cols-2 items-center gap-2 py-10 lg:grid-cols-3">
                         <div class="flex lg:justify-center lg:col-start-2">
-                            <img src="{{ asset('images/index-logo.svg') }}" alt="Logo" style="filter: drop-shadow(0 0 100px white);">
+                            <x-application-logo class="w-auto h-30" style="filter: drop-shadow(0 0 100px white);" />
                         </div>
                         @if (Route::has('login'))
                             <nav class="-mx-3 flex flex-1 justify-end">
