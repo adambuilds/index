@@ -5,6 +5,8 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\JobController;
 use App\Http\Controllers\ClockEventController;
+use App\Http\Controllers\SubjectController;
+use Illuminate\Http\Request;
 
 /*
 |--------------------------------------------------------------------------
@@ -27,6 +29,8 @@ Route::get('/test', function () {
 Route::get('/accounts', [JobController::class, 'getAccounts']);
 Route::get('/job/{id}', [JobController::class, 'getJob']);
 Route::get('/jobs/active', [JobController::class, 'getActiveJobs']);
+
+Route::get('/subjects/search', [SubjectController::class, 'search']);
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();

@@ -58,18 +58,18 @@
         </div>
         @endif
 
-        @if($subject->parents->count())
+        @if($subject->parentSubject)
         <div class="mt-6">
             <h3 class="font-semibold text-gray-900 dark:text-gray-100">Belongs To</h3>
-            <p class="text-gray-700 dark:text-gray-300">{{ $subject->parents->pluck('name')->join(', ') }}</p>
+            <p class="text-gray-700 dark:text-gray-300">{{ $subject->parentSubject->name }}</p>
         </div>
         @endif
 
-        @if($subject->children->count())
+        @if($subject->childSubjects->count())
         <div class="mt-6">
             <h3 class="font-semibold text-gray-900 dark:text-gray-100">Members</h3>
             <ul class="mt-2 space-y-1">
-                @foreach($subject->children as $child)
+                @foreach($subject->childSubjects as $child)
                     <li class="text-gray-700 dark:text-gray-300">{{ $child->name }}</li>
                 @endforeach
             </ul>
@@ -79,18 +79,19 @@
         @if($subject->meta->count())
         <div class="mt-6">
             <h3 class="font-semibold text-gray-900 dark:text-gray-100">Metadata</h3>
-            <div class="mt-2 flex flex-wrap gap-2">
+            <ul class="mt-2 space-y-1">
                 @foreach($subject->meta as $meta)
-                    <div class="px-2 py-1 bg-gray-200 rounded flex items-center space-x-1">
-                        <span class="text-gray-700 dark:text-gray-800">{{ $meta->key }}: {{ $meta->value }}</span>
+                    <li class="flex justify-between">
+                        <span class="text-gray-700 dark:text-gray-300">{{ $meta->key }}:</span>
+                        <span class="text-gray-700 dark:text-gray-300">{{ $meta->value }}</span>
                         <form method="POST" action="{{ route('subject.meta.destroy', [$subject->id, $meta->id]) }}">
                             @csrf
                             @method('DELETE')
                             <button type="submit" class="text-red-600">x</button>
                         </form>
-                    </div>
+                    </li>
                 @endforeach
-            </div>
+            </ul>
         </div>
         @endif
 
@@ -126,13 +127,6 @@
             </div>
             <div>
                 <button type="submit" class="bg-blue-600 text-white px-3 py-1 rounded-md">Add Tag</button>
-            </div>
-        </form>
-        <form method="POST" action="{{ route('subject.relationships.store', $subject->id) }}" class="mt-6 space-y-2">
-            @csrf
-            <x-subject-search />
-            <div>
-                <button type="submit" class="bg-blue-600 text-white px-3 py-1 rounded-md">Add Parent</button>
             </div>
         </form>
     </header>

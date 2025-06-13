@@ -13,6 +13,7 @@ class SubjectFactory extends Factory
     {
         return [
             'name' => $this->faker->word,
+            'belongs_to_subject_id' => null,
         ];
     }
 }

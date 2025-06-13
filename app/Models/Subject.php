@@ -8,13 +8,12 @@ use Illuminate\Database\Eloquent\Model;
 use App\Models\SubjectMeta;
 use App\Models\SubjectLink;
 use App\Models\Tag;
-use App\Models\SubjectRelationship;
 
 class Subject extends Model
 {
     use HasUlids, HasFactory;
 
-    protected $fillable = ['name', 'url'];
+    protected $fillable = ['name', 'url', 'belongs_to_subject_id'];
 
     public function meta()
     {
@@ -31,15 +30,13 @@ class Subject extends Model
         return $this->belongsToMany(Tag::class);
     }
 
-    public function parents()
+    public function parentSubject()
     {
-        return $this->belongsToMany(Subject::class, 'subject_relationships', 'subject_id', 'related_subject_id')
-            ->wherePivot('type', 'belongs_to');
+        return $this->belongsTo(Subject::class, 'belongs_to_subject_id');
     }
 
-    public function children()
+    public function childSubjects()
     {
-        return $this->belongsToMany(Subject::class, 'subject_relationships', 'related_subject_id', 'subject_id')
-            ->wherePivot('type', 'belongs_to');
+        return $this->hasMany(Subject::class, 'belongs_to_subject_id');
     }
 }
