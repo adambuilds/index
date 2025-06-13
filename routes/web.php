@@ -23,6 +23,9 @@ Route::middleware('auth')->group(function () {
     Route::post('subject/{subject}/tags', [SubjectTagController::class, 'store'])->name('subject.tags.store');
     Route::delete('subject/{subject}/tags/{tag}', [SubjectTagController::class, 'destroy'])->name('subject.tags.destroy');
 
+    Route::post('subject/{subject}/parents', [SubjectRelationController::class, 'store'])->name('subject.parents.store');
+    Route::delete('subject/{subject}/parents/{parent}', [SubjectRelationController::class, 'destroy'])->name('subject.parents.destroy');
+
     // user
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');

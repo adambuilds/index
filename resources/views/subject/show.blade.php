@@ -80,6 +80,8 @@
         </div>
         @endif
 
+        @include('subject.search', ['subject' => $subject])
+
         @if($subject->meta->count())
         <div class="mt-6">
             <h3 class="font-semibold text-gray-900 dark:text-gray-100">Metadata</h3>
