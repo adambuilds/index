@@ -1,4 +1,8 @@
-# index.one — Laravel 12 + Livewire Starter Kit  
+[![Laravel Forge Site Deployment Status](https://img.shields.io/endpoint?url=https%3A%2F%2Fforge.laravel.com%2Fsite-badges%2F53949abd-a003-47ea-8abe-86c312a2b554%3Flabel%3D1%26commit%3D1&style=flat-square)](https://forge.laravel.com/servers/863298/sites/2542382)
+
+# ![index](public/index-one-h.svg)
+
+## index.one — Laravel 12 + Livewire Starter Kit  
 _Revision: 2025-07-02_
 
 > A public showcase (and eventual multi-tenant platform) for a **universal index of immutable things**.  
@@ -21,6 +25,7 @@ _Revision: 2025-07-02_
 
 ## Project Vision
 `index.one` aims to provide a human‑readable landing page for **every immutable Thing**—elements, compounds, standards, etc.—and their relationships.  
+
 The MVP uses **SQL + Eloquent** for storage while abstracting a repository layer so the core models can be synced to **Neo4j** later without disruptive renames.
 
 ---
