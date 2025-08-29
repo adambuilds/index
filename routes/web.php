@@ -26,7 +26,9 @@ use App\Http\Controllers\PropertyController;
 use App\Http\Controllers\RelationController;
 use App\Http\Controllers\MessageController;
 
-Route::resource('things', ThingController::class);
-Route::resource('properties', PropertyController::class);
-Route::resource('relations', RelationController::class);
-Route::resource('messages', MessageController::class);
+Route::middleware(['auth'])->group(function () {
+    Route::resource('things', ThingController::class);
+    Route::resource('properties', PropertyController::class);
+    Route::resource('relations', RelationController::class);
+    Route::resource('messages', MessageController::class);
+});

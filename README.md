@@ -24,7 +24,7 @@ _Revision: 2025-07-02_
 ---
 
 ## Project Vision
-`index.one` aims to provide a human‑readable landing page for **every immutable Thing**—elements, compounds, standards, etc.—and their relationships.  
+`index.one` aims to provide a human‑readable landing page for **every immutable Thing**—elements, compounds, standards, etc.—and their relationships, at a fixed, semantically meaningful URL.
 
 The MVP uses **SQL + Eloquent** for storage while abstracting a repository layer so the core models can be synced to **Neo4j** later without disruptive renames.
 

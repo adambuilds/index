@@ -12,11 +12,7 @@ class Logout
      */
     public function __invoke()
     {
-        Auth::guard('web')->logout();
-
-        Session::invalidate();
-        Session::regenerateToken();
-
-        return redirect('/');
+        // Redirect to Auth0's logout route to terminate IdP + app session
+        return redirect('/logout');
     }
 }
