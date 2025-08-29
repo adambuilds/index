@@ -1,0 +1,15 @@
+version: '3.9'
+
+services:
+  neo4j:
+    image: "${NEO4J_IMAGE:-neo4j:5.9.0-community}"
+    env_file:
+      - .env
+    ports:
+      - "${NEO4J_HTTP_PORT:-7474}:7474"
+      - "${NEO4J_HTTPS_PORT:-7473}:7473"
+      - "${NEO4J_BOLT_PORT:-7687}:7687"
+    volumes:
+      - "${NEO4J_DATABASE_DIR:-./neo4j}:/data"
+      - "${RAW_DUMP_DIR:-./raw}:/data/raw"
+      - "${WORK_DIR:-./work}:/data/work"
