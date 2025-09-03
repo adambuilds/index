@@ -26,21 +26,6 @@ _Revision: 2025-07-02_
 ## Project Vision
 `index.one` aims to provide a human‑readable landing page for **every immutable Thing**—elements, compounds, standards, etc.—and their relationships, at a fixed, semantically meaningful URL.
 
-The MVP uses **SQL + Eloquent** for storage while abstracting a repository layer so the core models can be synced to **Neo4j** later without disruptive renames.
-
----
-
-## Technical Stack
-
-| Layer | Choice | Notes |
-|-------|--------|-------|
-| Framework | **Laravel 12** | LTS release (PHP ≥ 8.3) |
-| UI | **Livewire v3 Starter Kit** | Server‑driven reactive UI; ships with Alpine.js & Tailwind |
-| Auth | Laravel Breeze (Livewire preset) | Out‑of‑the‑box login, registration, email verification |
-| DB | MySQL / MariaDB (default) | Any SQL database supported by Laravel works |
-| Testing | PHPUnit 10 + Pest (optional) | TDD/BDD friendly |
-| Dev Ops | Sail / Docker Compose (recommended) | Reproducible local environment |
-
 ---
 
 ## Domain Model
@@ -56,32 +41,6 @@ _For detailed fields and indexes, see [`docs/index-one-model-manifest.md`](docs/
 | **Message** | Polymorphic comments / audit notes | `morphTo author`, `morphTo subject` |
 
 _Planned but **deferred**_: Tagging, Revision history, Fine‑grained ACL.
-
----
-
-## Repository & Folder Structure
-```text
-index-one/
-├─ app/
-│  ├─ Domain/            # Domain entities & value objects (future DDD)
-│  ├─ Models/            # Eloquent models (Thing, Property, …)
-│  ├─ Livewire/          # UI components
-│  └─ Repositories/      # Storage abstractions (SQL ⇆ Neo4j)
-├─ database/
-│  ├─ migrations/
-│  ├─ seeders/
-│  └─ factories/
-├─ docs/
-│  └─ index-one-model-manifest.md
-├─ resources/
-│  ├─ views/
-│  └─ css/js/
-├─ tests/
-│  └─ Feature/Unit/
-└─ docker-compose.yml    # Optional Sail override
-```
-
----
 
 ## Local Development Setup
 
@@ -117,6 +76,15 @@ DB_PORT=3306
 DB_DATABASE=index_one
 DB_USERNAME=root
 DB_PASSWORD=secret
+```
+
+Optional: Set an `index` alias for the `php artisan` command to simplify usage:
+
+```bash
+# ~/.bashrc  or  ~/.zshrc
+index () {
+    php /var/www/index/artisan "$@"
+}
 ```
 
 ### 4. Migrate & Seed
