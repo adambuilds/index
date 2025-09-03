@@ -4,6 +4,7 @@ namespace App\Auth;
 
 use App\Models\User;
 use Auth0\Laravel\UserRepositoryAbstract;
+use Auth0\Laravel\UserRepositoryContract;
 use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
@@ -11,7 +12,7 @@ use Illuminate\Support\Str;
 /**
  * Maps Auth0 users to local Eloquent users.
  */
-class Auth0UserRepository extends UserRepositoryAbstract
+class Auth0UserRepository extends UserRepositoryAbstract implements UserRepositoryContract
 {
     /**
      * Build a stateless user for API access tokens.
@@ -63,4 +64,3 @@ class Auth0UserRepository extends UserRepositoryAbstract
         return $user;
     }
 }
-

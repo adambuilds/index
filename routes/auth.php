@@ -5,18 +5,12 @@ use Illuminate\Support\Facades\Route;
 use Livewire\Volt\Volt;
 
 Route::middleware('guest')->group(function () {
-    Volt::route('login', 'auth.login')
-        ->name('login');
-
-    Volt::route('register', 'auth.register')
-        ->name('register');
-
-    Volt::route('forgot-password', 'auth.forgot-password')
-        ->name('password.request');
-
-    Volt::route('reset-password/{token}', 'auth.reset-password')
-        ->name('password.reset');
-
+    // Keep Livewire auth pages available under alternative paths to avoid
+    // conflicting with Auth0's SDK-managed /login route.
+    Volt::route('local/login', 'auth.login')->name('local.login');
+    Volt::route('local/register', 'auth.register')->name('local.register');
+    Volt::route('local/forgot-password', 'auth.forgot-password')->name('local.password.request');
+    Volt::route('local/reset-password/{token}', 'auth.reset-password')->name('local.password.reset');
 });
 
 Route::middleware('auth')->group(function () {
@@ -31,5 +25,6 @@ Route::middleware('auth')->group(function () {
         ->name('password.confirm');
 });
 
-Route::post('logout', App\Livewire\Actions\Logout::class)
-    ->name('logout');
+// Use Auth0's GET /logout route; disable Livewire's POST /logout to avoid conflicts.
+// If you still want a local logout endpoint, expose it under /local/logout.
+// Route::post('local/logout', App\Livewire\Actions\Logout::class)->name('local.logout');

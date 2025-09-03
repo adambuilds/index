@@ -8,7 +8,7 @@ Route::get('/', function () {
 })->name('home');
 
 Route::view('dashboard', 'dashboard')
-    ->middleware(['auth', 'verified'])
+    ->middleware(['auth'])
     ->name('dashboard');
 
 Route::middleware(['auth'])->group(function () {
@@ -32,3 +32,9 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('relations', RelationController::class);
     Route::resource('messages', MessageController::class);
 });
+
+// Provide a named login route that redirects to Auth0's /login endpoint.
+// This helps Laravel's auth middleware know where to send unauthenticated users.
+Route::get('/auth/login', function () {
+    return redirect('/login');
+})->name('login');
