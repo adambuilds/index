@@ -1,25 +1,11 @@
-[![Laravel Forge Site Deployment Status](https://img.shields.io/endpoint?url=https%3A%2F%2Fforge.laravel.com%2Fsite-badges%2F53949abd-a003-47ea-8abe-86c312a2b554%3Flabel%3D1%26commit%3D1&style=flat-square)](https://forge.laravel.com/servers/863298/sites/2542382)
+[![Laravel Forge Site Deployment Status](https://img.shields.io/endpoint?url=https%3A%2F%2Fforge.laravel.com%2Fsite-badges%2F039056a7-ecc8-412a-944b-111f2b17052e&style=plastic)](https://forge.laravel.com/servers/855626/sites/2635631)
 
 # ![index](public/index-one-h.svg)
 
-## index.one — Laravel 12 + Livewire Starter Kit  
-_Revision: 2025-07-02_
+## index.one
 
 > A public showcase (and eventual multi-tenant platform) for a **universal index of immutable things**.  
 > Built on Laravel 12, Livewire v3, Alpine.js, and Tailwind CSS.
-
----
-
-## Table of Contents
-1. [Project Vision](#project-vision)  
-2. [Technical Stack](#technical-stack)  
-3. [Domain Model](#domain-model)  
-4. [Repository & Folder Structure](#repository--folder-structure)  
-5. [Local Development Setup](#local-development-setup)  
-6. [Running & Testing](#running--testing)  
-7. [Future Roadmap](#future-roadmap)  
-8. [Contributing](#contributing)  
-9. [License](#license)  
 
 ---
 
